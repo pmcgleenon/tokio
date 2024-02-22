@@ -97,7 +97,7 @@ jobs:
       - name: Tests run with all features (including parking_lot)
         run: |
           set -euxo pipefail
-          cargo nextest run -p tokio --all-features --target ${{ matrix.target }} -- threaded_scheduler_4_threads::nested_rt alt_threaded_scheduler_4_threads::panic_in_block_on
+          cargo nextest run -p tokio --all-features --target ${{ matrix.target }} -- alt_threaded_scheduler_4_threads::shutdown_timeout_0 alt_threaded_scheduler_4_threads::shutdown_wakeup_time alt_threaded_scheduler_4_threads::shutdown_concurrent_spawn read_to_end_doesnt_grow_with_capacity  threaded_scheduler_4_threads::nested_rt alt_threaded_scheduler_4_threads::panic_in_block_on 
         env:
           RUST_TEST_THREADS: 1
           RUSTFLAGS: --cfg tokio_unstable -Dwarnings --cfg tokio_no_tuning_tests ${{ matrix.rustflags }}
@@ -135,7 +135,7 @@ jobs:
       - name: Tests run with all features (without parking_lot)
         run: |
           set -euxo pipefail
-          cargo nextest run -p tokio --features full,test-util --target ${{ matrix.target }} -- threaded_scheduler_4_threads::nested_rt alt_threaded_scheduler_4_threads::panic_in_block_on
+          cargo nextest run -p tokio --features full,test-util --target ${{ matrix.target }} -- alt_threaded_scheduler_4_threads::shutdown_timeout_0 alt_threaded_scheduler_4_threads::shutdown_wakeup_time alt_threaded_scheduler_4_threads::shutdown_concurrent_spawn read_to_end_doesnt_grow_with_capacity threaded_scheduler_4_threads::nested_rt alt_threaded_scheduler_4_threads::panic_in_block_on
         env:
           RUST_TEST_THREADS: 1
           RUSTFLAGS: --cfg tokio_unstable -Dwarnings --cfg tokio_no_parking_lot --cfg tokio_no_tuning_tests ${{ matrix.rustflags }}
