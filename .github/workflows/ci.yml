@@ -102,7 +102,6 @@ jobs:
         env:
           RUST_TEST_THREADS: 1
           RUSTFLAGS: --cfg tokio_unstable -Dwarnings --cfg tokio_no_tuning_tests ${{ matrix.rustflags }}
-          RUST_BACKTRACE: 1
 
   cross-test-without-parking_lot:
     needs: basics
@@ -142,5 +141,4 @@ jobs:
         env:
           RUST_TEST_THREADS: 1
           RUSTFLAGS: --cfg tokio_unstable -Dwarnings --cfg tokio_no_parking_lot --cfg tokio_no_tuning_tests ${{ matrix.rustflags }}
-          RUST_BACKTRACE: 1
 
