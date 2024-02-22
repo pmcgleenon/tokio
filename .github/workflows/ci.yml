@@ -38,7 +38,7 @@ jobs:
   # Depends on all actions that are required for a "successful" CI run.
   tests-pass:
     name: all systems go
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
       - cross-test-with-parking_lot
     steps:
@@ -47,7 +47,7 @@ jobs:
   # Basic actions that must pass before we kick off more expensive tests.
   basics:
     name: basic checks
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
       - clippy
     steps:
@@ -55,7 +55,7 @@ jobs:
 
   clippy:
     name: clippy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Rust ${{ env.rust_clippy }}
@@ -70,7 +70,7 @@ jobs:
 
   cross-test-with-parking_lot:
     needs: basics
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
@@ -92,6 +92,7 @@ jobs:
       - uses: taiki-e/setup-cross-toolchain-action@v1
         with:
           target: ${{ matrix.target }}
+          qemu: '7.2'
 
       - uses: Swatinem/rust-cache@v2
       - name: Tests run with all features (including parking_lot)
@@ -105,7 +106,7 @@ jobs:
 
   cross-test-without-parking_lot:
     needs: basics
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
@@ -127,6 +128,7 @@ jobs:
       - uses: taiki-e/setup-cross-toolchain-action@v1
         with:
           target: ${{ matrix.target }}
+          qemu: '7.2'
 
       - name: Remove `parking_lot` from `full` feature
         run: sed -i '0,/parking_lot/{/parking_lot/d;}' tokio/Cargo.toml
