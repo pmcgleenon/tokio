@@ -38,7 +38,7 @@ jobs:
   # Depends on all actions that are required for a "successful" CI run.
   tests-pass:
     name: all systems go
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - cross-test-with-parking_lot
     steps:
@@ -47,7 +47,7 @@ jobs:
   # Basic actions that must pass before we kick off more expensive tests.
   basics:
     name: basic checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - clippy
     steps:
@@ -55,7 +55,7 @@ jobs:
 
   clippy:
     name: clippy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - name: Install Rust ${{ env.rust_clippy }}
@@ -70,7 +70,7 @@ jobs:
 
   cross-test-with-parking_lot:
     needs: basics
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         include:
@@ -105,7 +105,7 @@ jobs:
 
   cross-test-without-parking_lot:
     needs: basics
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         include:
